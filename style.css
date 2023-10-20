@@ -1,0 +1,103 @@
+html{
+    background-color: whitesmoke;
+}
+body{
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+.game-container{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 95vw;
+    min-height: 70vh;
+}
+
+.cell{
+    width: 20vw;
+    height: 20vh;
+    background-color: rgb(95, 95, 95);
+    border: solid rgb(48, 48, 48)  5px ;
+    
+}
+.row{
+    display: flex;
+    align-items: center;
+    width: 80vw;
+    height: 20vh;
+    background-color: rgb(95, 95, 95);
+    border: solid rgb(48, 48, 48)  5px ;
+}
+
+.game-board{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80vw;
+    height: 84vh;
+    margin-top: 0.3rem;
+    background-color: rgb(95, 95, 95);
+    border: solid rgb(48, 48, 48)  12px ;
+    border-radius: 3%;
+
+}
+.reload{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+footer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.cell{
+    font-size: 8em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family : "Mooli";
+}
+h2.score{
+    margin: 0.3rem;
+}
+
+button {
+    border: none;
+    color: #fff;
+    background-image: linear-gradient(30deg, #0400ff, #4ce3f7);
+    border-radius: 20px;
+    background-size: 100% auto;
+    font-family: "Mooli";
+    font-size: 17px;
+    padding: 0.6em 1.5em;
+   }
+   
+   button:hover {
+    background-position: right center;
+    background-size: 200% auto;
+    -webkit-animation: pulse 2s infinite;
+    animation: pulse512 1.5s infinite;
+   }
+   
+   @keyframes pulse512 {
+    0% {
+     box-shadow: 0 0 0 0 #05bada66;
+    }
+   
+    70% {
+     box-shadow: 0 0 0 10px rgb(218 103 68 / 0%);
+    }
+   
+    100% {
+     box-shadow: 0 0 0 0 rgb(218 103 68 / 0%);
+    }
+   }
