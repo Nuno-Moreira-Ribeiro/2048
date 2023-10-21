@@ -139,44 +139,6 @@ function moveUp(board) {
         }
     }
 }
-
-// function moveDown(board) {
-//     for (let j = 0; j < board[0].length; j++) {
-//         let newColumn = [];
-
-//         for (let i = board.length - 1; i >= 0; i--) {
-//             if (board[i][j] !== 0) {
-//                 newColumn.push(board[i][j]);
-//             }
-//         }
-
-//         for (let i = newColumn.length; i < board.length; i++) {
-//             newColumn.push(0);
-//         }
-
-//         for (let i = 0; i < newColumn.length - 1; i++) {
-//             if (newColumn[i] === newColumn[i + 1]) {
-//                 newColumn[i] *= 2;
-//                 newColumn[i + 1] = 0;
-//             }
-//         }
-
-//         let resultColumn = [];
-//         for (let i = 0; i < newColumn.length; i++) {
-//             if (newColumn[i] !== 0) {
-//                 resultColumn.push(newColumn[i]);
-//             }
-//         }
-
-//         while (resultColumn.length < board.length) {
-//             resultColumn.unshift(0);
-//         }
-
-//         for (let i = board.length - 1; i >= 0; i--) {
-//             board[i][j] = resultColumn.shift();
-//         }
-//     }
-// }
 function moveDown(board) {
     for (let j = 0; j < board[0].length; j++) {
         let newColumn = [];
@@ -215,89 +177,6 @@ function moveDown(board) {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-// function moveUp() {
-//     for (let j = 0; j < board[0].length; j++) {
-//         for (let i = 1; i < board.length; i++) {
-//             if (board[i][j] !== 0) {
-//                 let canMove = true;
-//                 for (let k = i - 1; k >= 0; k--) {
-//                     if (board[k][j] === 0 && noObstacles(k, j, i, board)) {
-//                         board[k][j] = board[i][j];
-//                         board[i][j] = 0;
-//                         bouge = true;
-//                     } else if (board[k][j] === board[i][j] && noObstacles(k, j, i, board) && canMove) {
-//                         board[k][j] *= 2;
-//                         board[i][j] = 0;
-//                         canMove = false;
-//                         bouge = true;
-//                     } else if (board[i][k] !== 0 && board[i][k] !== board[i][j]) {
-//                         canMove = false;
-//                         break;
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }
-
-// function moveRight() {
-//     for (let i = 0; i < board.length; i++) {
-//         for (let j = board[i].length - 2; j >= 0; j--) {
-//             if (board[i][j] !== 0) {
-//                 let canMove = true;
-//                 for (let k = board[i].length - 1; k > j; k--) {
-//                     if (board[i][k] === 0 && noObstacles(i, j, k, board)) {
-//                         board[i][k] = board[i][j];
-//                         board[i][j] = 0;
-//                         bouge = true;
-//                     } else if (board[i][k] === board[i][j] && noObstacles(i, j, k, board) && canMove) {
-//                         board[i][k] *= 2;
-//                         board[i][j] = 0;
-//                         canMove = false;
-//                         bouge = true;
-//                     } else if (board[i][k] !== 0 && board[i][k] !== board[i][j]) {
-//                         canMove = false;
-//                         break;
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }
-
-// function moveDown() {
-//     for (let j = 0; j < board[0].length; j++) {
-//         for (let i = board.length - 2; i >= 0; i--) {
-//             if (board[i][j] !== 0) {
-//                 let canMove = true;
-//                 for (let k = board.length - 1; k > i; k--) {
-//                     if (board[k][j] === 0 && noObstacles(j, i, k, board)) {
-//                         board[k][j] = board[i][j];
-//                         board[i][j] = 0;
-//                         bouge = true;
-//                     } else if (board[k][j] === board[i][j] && noObstacles(j, i, k, board) && canMove) {
-//                         board[k][j] *= 2;
-//                         board[i][j] = 0;
-//                         canMove = false;
-//                         bouge = true;
-//                     } else if (board[i][k] !== 0 && board[i][k] !== board[i][j]) {
-//                         canMove = false;
-//                         break;
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }
 
 function noObstacles(row, col1, col2, board) {
     for (let i = col1 + 1; i < col2; i++) {
@@ -368,6 +247,7 @@ function getMax() {
 
 /*Start Test Use*/
 
+//need to launch the test.
 
 // module.exports = {
 //     moveLeft,
