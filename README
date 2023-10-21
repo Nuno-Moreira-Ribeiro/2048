@@ -1,0 +1,1 @@
+To launch the unit tests, you have to comment out the lines that use document.something. You only need the move functions and the functions they use.

@@ -27,105 +27,277 @@ function canMerge(value1, value2) {
     return value1 === value2 && value1 !== 0;
 }
 
-function moveLeft() {
+/**
+ * @param {Array<Array<number>>} boardGive
+ */
+function moveLeft(board) {
     for (let i = 0; i < board.length; i++) {
-        for (let j = 1; j < board[i].length; j++) {
+        let newRow = [];
+
+        for (let j = 0; j < board[i].length; j++) {
             if (board[i][j] !== 0) {
-                let canMove = true;
-                for (let k = 0; k < j; k++) {
-                    if (board[i][k] === 0 && noObstacles(i, k, j, board)) {
-                        board[i][k] = board[i][j];
-                        board[i][j] = 0;
-                        bouge = true;
-                    } else if (board[i][k] === board[i][j] && noObstacles(i, k, j, board) && canMove) {
-                        board[i][k] *= 2;
-                        board[i][j] = 0;
-                        canMove = false;
-                        bouge = true;
-                    } else if (board[i][k] !== 0 && board[i][k] !== board[i][j]) {
-                        canMove = false;
-                        break;
-                    }
-                }
+                newRow.push(board[i][j]);
             }
         }
+
+        for (let j = newRow.length; j < board[i].length; j++) {
+            newRow.push(0);
+        }
+
+        for (let j = 0; j < newRow.length - 1; j++) {
+            if (newRow[j] === newRow[j + 1]) {
+                newRow[j] *= 2;
+                newRow[j + 1] = 0;
+            }
+        }
+
+        let resultRow = [];
+        for (let j = 0; j < newRow.length; j++) {
+            if (newRow[j] !== 0) {
+                resultRow.push(newRow[j]);
+            }
+        }
+
+        while (resultRow.length < board[i].length) {
+            resultRow.push(0);
+        }
+
+        board[i] = resultRow;
     }
 }
 
-function moveUp() {
-    for (let j = 0; j < board[0].length; j++) {
-        for (let i = 1; i < board.length; i++) {
-            if (board[i][j] !== 0) {
-                let canMove = true;
-                for (let k = i - 1; k >= 0; k--) {
-                    if (board[k][j] === 0 && noObstacles(k, j, i, board)) {
-                        board[k][j] = board[i][j];
-                        board[i][j] = 0;
-                        bouge = true;
-                    } else if (board[k][j] === board[i][j] && noObstacles(k, j, i, board) && canMove) {
-                        board[k][j] *= 2;
-                        board[i][j] = 0;
-                        canMove = false;
-                        bouge = true;
-                    } else if (board[i][k] !== 0 && board[i][k] !== board[i][j]) {
-                        canMove = false;
-                        break;
-                    }
-                }
-            }
-        }
-    }
-}
-
-function moveRight() {
+function moveRight(board) {
     for (let i = 0; i < board.length; i++) {
-        for (let j = board[i].length - 2; j >= 0; j--) {
+        let newRow = [];
+
+        for (let j = board[i].length - 1; j >= 0; j--) {
             if (board[i][j] !== 0) {
-                let canMove = true;
-                for (let k = board[i].length - 1; k > j; k--) {
-                    if (board[i][k] === 0 && noObstacles(i, j, k, board)) {
-                        board[i][k] = board[i][j];
-                        board[i][j] = 0;
-                        bouge = true;
-                    } else if (board[i][k] === board[i][j] && noObstacles(i, j, k, board) && canMove) {
-                        board[i][k] *= 2;
-                        board[i][j] = 0;
-                        canMove = false;
-                        bouge = true;
-                    } else if (board[i][k] !== 0 && board[i][k] !== board[i][j]) {
-                        canMove = false;
-                        break;
-                    }
-                }
+                newRow.push(board[i][j]);
             }
+        }
+
+        for (let j = newRow.length; j < board[i].length; j++) {
+            newRow.push(0);
+        }
+
+        for (let j = 0; j < newRow.length - 1; j++) {
+            if (newRow[j] === newRow[j + 1]) {
+                newRow[j] *= 2;
+                newRow[j + 1] = 0;
+            }
+        }
+
+        let resultRow = [];
+        for (let j = 0; j < newRow.length; j++) {
+            if (newRow[j] !== 0) {
+                resultRow.push(newRow[j]);
+            }
+        }
+
+        while (resultRow.length < board[i].length) {
+            resultRow.unshift(0);
+        }
+
+        board[i] = resultRow;
+    }
+}
+
+function moveUp(board) {
+    for (let j = 0; j < board[0].length; j++) {
+        let newColumn = [];
+
+        for (let i = 0; i < board.length; i++) {
+            if (board[i][j] !== 0) {
+                newColumn.push(board[i][j]);
+            }
+        }
+
+        for (let i = newColumn.length; i < board.length; i++) {
+            newColumn.push(0);
+        }
+
+        for (let i = 0; i < newColumn.length - 1; i++) {
+            if (newColumn[i] === newColumn[i + 1]) {
+                newColumn[i] *= 2;
+                newColumn[i + 1] = 0;
+            }
+        }
+
+        let resultColumn = [];
+        for (let i = 0; i < newColumn.length; i++) {
+            if (newColumn[i] !== 0) {
+                resultColumn.push(newColumn[i]);
+            }
+        }
+
+        while (resultColumn.length < board.length) {
+            resultColumn.push(0);
+        }
+
+        for (let i = 0; i < board.length; i++) {
+            board[i][j] = resultColumn[i];
         }
     }
 }
 
-function moveDown() {
+// function moveDown(board) {
+//     for (let j = 0; j < board[0].length; j++) {
+//         let newColumn = [];
+
+//         for (let i = board.length - 1; i >= 0; i--) {
+//             if (board[i][j] !== 0) {
+//                 newColumn.push(board[i][j]);
+//             }
+//         }
+
+//         for (let i = newColumn.length; i < board.length; i++) {
+//             newColumn.push(0);
+//         }
+
+//         for (let i = 0; i < newColumn.length - 1; i++) {
+//             if (newColumn[i] === newColumn[i + 1]) {
+//                 newColumn[i] *= 2;
+//                 newColumn[i + 1] = 0;
+//             }
+//         }
+
+//         let resultColumn = [];
+//         for (let i = 0; i < newColumn.length; i++) {
+//             if (newColumn[i] !== 0) {
+//                 resultColumn.push(newColumn[i]);
+//             }
+//         }
+
+//         while (resultColumn.length < board.length) {
+//             resultColumn.unshift(0);
+//         }
+
+//         for (let i = board.length - 1; i >= 0; i--) {
+//             board[i][j] = resultColumn.shift();
+//         }
+//     }
+// }
+function moveDown(board) {
     for (let j = 0; j < board[0].length; j++) {
-        for (let i = board.length - 2; i >= 0; i--) {
+        let newColumn = [];
+
+        for (let i = 0; i < board.length; i++) {
             if (board[i][j] !== 0) {
-                let canMove = true;
-                for (let k = board.length - 1; k > i; k--) {
-                    if (board[k][j] === 0 && noObstacles(j, i, k, board)) {
-                        board[k][j] = board[i][j];
-                        board[i][j] = 0;
-                        bouge = true;
-                    } else if (board[k][j] === board[i][j] && noObstacles(j, i, k, board) && canMove) {
-                        board[k][j] *= 2;
-                        board[i][j] = 0;
-                        canMove = false;
-                        bouge = true;
-                    } else if (board[i][k] !== 0 && board[i][k] !== board[i][j]) {
-                        canMove = false;
-                        break;
-                    }
-                }
+                newColumn.push(board[i][j]);
             }
+        }
+
+        while (newColumn.length < board.length) {
+            newColumn.unshift(0);
+        }
+
+        for (let i = newColumn.length - 1; i > 0; i--) {
+            if (newColumn[i] === newColumn[i - 1]) {
+                newColumn[i] *= 2;
+                newColumn[i - 1] = 0;
+            }
+        }
+
+        let resultColumn = [];
+
+        for (let i = 0; i < newColumn.length; i++) {
+            if (newColumn[i] !== 0) {
+                resultColumn.push(newColumn[i]);
+            }
+        }
+
+        while (resultColumn.length < board.length) {
+            resultColumn.unshift(0);
+        }
+
+        for (let i = 0; i < board.length; i++) {
+            board[i][j] = resultColumn[i];
         }
     }
 }
+
+
+
+
+
+
+
+
+
+// function moveUp() {
+//     for (let j = 0; j < board[0].length; j++) {
+//         for (let i = 1; i < board.length; i++) {
+//             if (board[i][j] !== 0) {
+//                 let canMove = true;
+//                 for (let k = i - 1; k >= 0; k--) {
+//                     if (board[k][j] === 0 && noObstacles(k, j, i, board)) {
+//                         board[k][j] = board[i][j];
+//                         board[i][j] = 0;
+//                         bouge = true;
+//                     } else if (board[k][j] === board[i][j] && noObstacles(k, j, i, board) && canMove) {
+//                         board[k][j] *= 2;
+//                         board[i][j] = 0;
+//                         canMove = false;
+//                         bouge = true;
+//                     } else if (board[i][k] !== 0 && board[i][k] !== board[i][j]) {
+//                         canMove = false;
+//                         break;
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// function moveRight() {
+//     for (let i = 0; i < board.length; i++) {
+//         for (let j = board[i].length - 2; j >= 0; j--) {
+//             if (board[i][j] !== 0) {
+//                 let canMove = true;
+//                 for (let k = board[i].length - 1; k > j; k--) {
+//                     if (board[i][k] === 0 && noObstacles(i, j, k, board)) {
+//                         board[i][k] = board[i][j];
+//                         board[i][j] = 0;
+//                         bouge = true;
+//                     } else if (board[i][k] === board[i][j] && noObstacles(i, j, k, board) && canMove) {
+//                         board[i][k] *= 2;
+//                         board[i][j] = 0;
+//                         canMove = false;
+//                         bouge = true;
+//                     } else if (board[i][k] !== 0 && board[i][k] !== board[i][j]) {
+//                         canMove = false;
+//                         break;
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// function moveDown() {
+//     for (let j = 0; j < board[0].length; j++) {
+//         for (let i = board.length - 2; i >= 0; i--) {
+//             if (board[i][j] !== 0) {
+//                 let canMove = true;
+//                 for (let k = board.length - 1; k > i; k--) {
+//                     if (board[k][j] === 0 && noObstacles(j, i, k, board)) {
+//                         board[k][j] = board[i][j];
+//                         board[i][j] = 0;
+//                         bouge = true;
+//                     } else if (board[k][j] === board[i][j] && noObstacles(j, i, k, board) && canMove) {
+//                         board[k][j] *= 2;
+//                         board[i][j] = 0;
+//                         canMove = false;
+//                         bouge = true;
+//                     } else if (board[i][k] !== 0 && board[i][k] !== board[i][j]) {
+//                         canMove = false;
+//                         break;
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
 
 function noObstacles(row, col1, col2, board) {
     for (let i = col1 + 1; i < col2; i++) {
@@ -137,9 +309,7 @@ function noObstacles(row, col1, col2, board) {
 }
 
 
-/**
- * @param {Array<Array<number>>} boardGive
- */
+
 function updateBoard() {
     const cells = document.querySelectorAll('.cell');
     for (let i = 0; i < board.length; i++) {
@@ -196,21 +366,33 @@ function getMax() {
     score.textContent = `Score: ${max}`;
 }
 
+/*Start Test Use*/
+
+
+// module.exports = {
+//     moveLeft,
+//     moveDown,
+//     moveRight,
+//     moveUp,
+// };
+
+/*End Test Use */
+
 document.addEventListener('keydown', function (event) {
     if (loss !== true && win !== true) {
         bouge = false;
         switch (event.key) {
             case "ArrowLeft":
-                moveLeft();
+                moveLeft(board);
                 break;
             case "ArrowRight":
-                moveRight();
+                moveRight(board);
                 break;
             case "ArrowUp":
-                moveUp();
+                moveUp(board);
                 break;
             case "ArrowDown":
-                moveDown();
+                moveDown(board);
                 break;
             case "!":
                 cheatCode();
@@ -222,9 +404,9 @@ document.addEventListener('keydown', function (event) {
             checkWinOrLoss();
             if (win === false && loss === false) {
                 setTimeout(function () {
-                    if (bouge === true) {
-                        addRandomNumbers();
-                    }
+
+                    addRandomNumbers();
+
                     updateBoard();
                 }, 200);
             }
@@ -256,6 +438,7 @@ function newGame() {
     ];
     win = false;
     loss = false;
+    max=0
     addRandomNumbers();
     addRandomNumbers();
     updateBoard();
