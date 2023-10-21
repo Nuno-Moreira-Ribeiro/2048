@@ -7,6 +7,7 @@ let board = [
 let win = false;
 let loss = false;
 let max = 0;
+let bouge = false;
 
 function addRandomNumbers() {
     let row = Math.floor(Math.random() * 4);
@@ -28,12 +29,12 @@ function moveLeft() {
                     if (board[i][k] === 0 && noObstacles(i, k, j, board)) {
                         board[i][k] = board[i][j];
                         board[i][j] = 0;
-                        break;
+                        bouge=true;
                     } else if (board[i][k] === board[i][j] && noObstacles(i, k, j, board) && canMove) {
                         board[i][k] *= 2;
                         board[i][j] = 0;
                         canMove = false;
-                        break;
+                        bouge =true;
                     } else if (board[i][k] !== 0 && board[i][k] !== board[i][j]) {
                         canMove = false;
                     }
@@ -52,9 +53,14 @@ function moveUp() {
                     if (board[k][j] === 0 && noObstacles(k, j, i, board)) {
                         board[k][j] = board[i][j];
                         board[i][j] = 0;
+                        bouge =true;
                     } else if (board[k][j] === board[i][j] && noObstacles(k, j, i, board) && canMove) {
                         board[k][j] *= 2;
                         board[i][j] = 0;
+                        canMove = false;
+                        bouge =true;
+                    }
+                    else if (board[i][k] !== 0 && board[i][k] !== board[i][j]) {
                         canMove = false;
                     }
                 }
@@ -72,9 +78,14 @@ function moveRight() {
                     if (board[i][k] === 0 && noObstacles(i, j, k, board)) {
                         board[i][k] = board[i][j];
                         board[i][j] = 0;
+                        bouge =true;
                     } else if (board[i][k] === board[i][j] && noObstacles(i, j, k, board) && canMove) {
                         board[i][k] *= 2;
                         board[i][j] = 0;
+                        canMove = false;
+                        bouge =true;
+                    }
+                    else if (board[i][k] !== 0 && board[i][k] !== board[i][j]) {
                         canMove = false;
                     }
                 }
@@ -89,12 +100,17 @@ function moveDown() {
             if (board[i][j] !== 0) {
                 let canMove = true;
                 for (let k = board.length - 1; k > i; k--) {
-                    if (board[k][j] === 0 && noObstacles(i, j, k, board)) {
+                    if (board[k][j] === 0 && noObstacles(j, i, k, board)) {
                         board[k][j] = board[i][j];
                         board[i][j] = 0;
-                    } else if (board[k][j] === board[i][j] && noObstacles(i, j, k, board) && canMove) {
+                        bouge =true;
+                    } else if (board[k][j] === board[i][j] && noObstacles(j, i, k, board) && canMove) {
                         board[k][j] *= 2;
                         board[i][j] = 0;
+                        canMove = false;
+                        bouge =true;
+                    }
+                    else if (board[i][k] !== 0 && board[i][k] !== board[i][j]) {
                         canMove = false;
                     }
                 }
@@ -103,17 +119,26 @@ function moveDown() {
     }
 }
 
+// function noObstacles(row, col1, col2, board) {
+//     for (let i = col1 + 1; i < col2; i++) {
+//         if (board[row][i] !== 0) {
+//             return false;
+//         }
+//     }
+//     return true;
+// }
 function noObstacles(row, col1, col2, board) {
     for (let i = col1 + 1; i < col2; i++) {
-        if (board[row][i] !== 0) {
+        if (board[row][i] !== board[row][col1] && board[row][i] !== 0) {
             return false;
         }
+
     }
     return true;
 }
 
 /**
- * @param {Array<Array<number>>} boardGive - Le tableau représentant la grille de jeu.
+ * @param {Array<Array<number>>} boardGive
  */
 function updateBoard() {
     const cells = document.querySelectorAll('.cell');
@@ -122,10 +147,24 @@ function updateBoard() {
             const cell = cells[i * 4 + j];
             cell.textContent = board[i][j] === 0 ? '' : board[i][j];
             cell.className = 'cell';
-            if (board[i][j] != 0) {
+            if (board[i][j] !== 0) {
                 cell.classList.add(`number-${board[i][j]}`);
             }
         }
+    }
+    Stateverification();
+}
+
+function Stateverification() {
+    const state = document.querySelector('.State');
+    if (loss === true) {
+        state.textContent = "Etat : Perdu!!!";
+    }
+    else if (win === true) {
+        state.textContent = "Etat : Gagné!!!";
+    }
+    else {
+        state.textContent = "Etat : En cours ...";
     }
 }
 
@@ -134,7 +173,7 @@ function checkWinOrLoss() {
         for (let j = 0; j < board[i].length; j++) {
             if (board[i][j] === 2048) {
                 win = true;
-                return
+                return;
             }
             else if (board[i][j] === 0) {
                 return;
@@ -147,7 +186,7 @@ function checkWinOrLoss() {
 }
 
 function getMax() {
-    max = 0
+    max = 0;
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
             max += board[i][j];
@@ -158,33 +197,56 @@ function getMax() {
 }
 
 document.addEventListener('keydown', function (event) {
-    switch (event.key) {
-        case "ArrowLeft":
-            moveLeft();
-            break;
-        case "ArrowRight":
-            moveRight();
-            break;
-        case "ArrowUp":
-            moveUp();
-            break;
-        case "ArrowDown":
-            moveDown();
-            break;
-    }
-    if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) {
-        updateBoard();
-        getMax();
-        checkWinOrLoss();
-        if (win === false && loss === false) {
-            setTimeout(500);
-            addRandomNumbers();
-            updateBoard();
+    if (loss !== true && win !== true) {
+        bouge=false;
+        switch (event.key) {
+            case "ArrowLeft":
+                moveLeft();
+                break;
+            case "ArrowRight":
+                moveRight();
+                break;
+            case "ArrowUp":
+                moveUp();
+                break;
+            case "ArrowDown":
+                moveDown();
+                break;
+            case "!":
+                cheatCode();
+                break;
         }
-    }
+        if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown","!"].includes(event.key)) {
+            updateBoard();
+            getMax();
+            checkWinOrLoss();
+            if (win === false && loss === false) {
+                setTimeout(function() {
+                    if(bouge === true){
+                        addRandomNumbers();
+                    }
+                    updateBoard();
+                  }, 200);
+            }
+        }
+    }else{
+        updateBoard();
+    } 
 });
 
-// Démarrer une nouvelle partie
+function cheatCode(){
+    for(let i = 0; i< board.length; i++){
+        for(let j = 0; j<board[i].length; j++){
+            if(board[i][j] === 0){
+                board[i][j] = 2048;
+                bouge = true;
+                return;
+            }
+        }
+    }
+
+}
+
 function newGame() {
     board = [
         [0, 0, 0, 0],
@@ -199,7 +261,6 @@ function newGame() {
     updateBoard();
 }
 
-// Ajouter un événement de clic sur le bouton "Nouvelle partie"
 document.getElementById('new-game').addEventListener('click', function () {
     newGame();
 });
