@@ -9,6 +9,10 @@ let loss = false;
 let max = 0;
 let bouge = false;
 
+addRandomNumbers();
+addRandomNumbers();
+updateBoard();
+
 function addRandomNumbers() {
     let row = Math.floor(Math.random() * 4);
     let col = Math.floor(Math.random() * 4);
