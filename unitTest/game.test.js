@@ -3,28 +3,28 @@ const {
     moveDown,
     moveRight,
     moveUp,
-  } = require('../script'); 
-  
+} = require('../script');
+
 
 
 test('Test unitaire pour moveLeft', () => {
-  const board = [
-    [2, 0, 0, 2],
-    [2, 2, 4, 4],
-    [0, 0, 2, 2],
-    [2, 2, 2, 2]
-  ];
-  console.log("LEFT");
-  moveLeft(board);
-  console.log(board);
+    const board = [
+        [2, 0, 0, 2],
+        [2, 2, 4, 4],
+        [0, 0, 2, 2],
+        [2, 2, 2, 2]
+    ];
+    console.log("LEFT");
+    moveLeft(board);
+    console.log(board);
 
-  // Assurez-vous que le résultat du déplacement à gauche est correct
-  expect(board).toEqual([
-    [4, 0, 0, 0],
-    [4, 8, 0, 0],
-    [4, 0, 0, 0],
-    [4, 4, 0, 0]
-  ]);
+    // Assurez-vous que le résultat du déplacement à gauche est correct
+    expect(board).toEqual([
+        [4, 0, 0, 0],
+        [4, 8, 0, 0],
+        [4, 0, 0, 0],
+        [4, 4, 0, 0]
+    ]);
 });
 
 test('Test unitaire pour moveRight', () => {
@@ -32,7 +32,7 @@ test('Test unitaire pour moveRight', () => {
         [2, 0, 0, 2],
         [2, 2, 4, 4],
         [0, 0, 2, 2],
-        [2, 2, 2, 2]
+        [8, 2, 2, 2]
     ];
     console.log("RIGHT");
     moveRight(board);
@@ -41,9 +41,9 @@ test('Test unitaire pour moveRight', () => {
     // Assurez-vous que le résultat du déplacement à droite est correct
     expect(board).toEqual([
         [0, 0, 0, 4],
-        [0, 0, 8, 4],
+        [0, 0, 4, 8],
         [0, 0, 0, 4],
-        [0, 0, 4, 4]
+        [0, 8, 2, 4]
     ]);
 });
 

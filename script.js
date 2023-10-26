@@ -8,6 +8,9 @@ let win = false;
 let loss = false;
 let max = 0;
 let bouge = false;
+let startx, starty, endx, endy;
+let TabForXtouche = [];
+let TabForYtouche = [];
 
 addRandomNumbers();
 addRandomNumbers();
@@ -31,9 +34,7 @@ function canMerge(value1, value2) {
     return value1 === value2 && value1 !== 0;
 }
 
-/**
- * @param {Array<Array<number>>} boardGive
- */
+
 function moveLeft(board) {
     for (let i = 0; i < board.length; i++) {
         let newRow = [];
@@ -76,35 +77,27 @@ function moveRight(board) {
 
         for (let j = board[i].length - 1; j >= 0; j--) {
             if (board[i][j] !== 0) {
-                newRow.push(board[i][j]);
+                newRow.unshift(board[i][j]);
             }
         }
 
-        for (let j = newRow.length; j < board[i].length; j++) {
-            newRow.push(0);
-        }
-
-        for (let j = 0; j < newRow.length - 1; j++) {
-            if (newRow[j] === newRow[j + 1]) {
+        for (let j = newRow.length - 1; j > 0; j--) {
+            if (newRow[j] === newRow[j - 1]) {
                 newRow[j] *= 2;
-                newRow[j + 1] = 0;
+                newRow[j - 1] = 0;
             }
         }
 
-        let resultRow = [];
-        for (let j = 0; j < newRow.length; j++) {
-            if (newRow[j] !== 0) {
-                resultRow.push(newRow[j]);
-            }
+        newRow = newRow.filter(value => value !== 0);
+
+        while (newRow.length < board[i].length) {
+            newRow.unshift(0);
         }
 
-        while (resultRow.length < board[i].length) {
-            resultRow.unshift(0);
-        }
-
-        board[i] = resultRow;
+        board[i] = newRow;
     }
 }
+
 
 function moveUp(board) {
     for (let j = 0; j < board[0].length; j++) {
@@ -300,6 +293,54 @@ document.addEventListener('keydown', function (event) {
     }
 });
 
+document.addEventListener('touchstart', (event) => {
+    startx = event.touches[0].clientX;
+    starty = event.touches[0].clientY;
+
+});
+document.addEventListener('touchend', (event) => {
+    endx = event.changedTouches[0].clientX;
+    endy = event.changedTouches[0].clientY;
+    let deltaX = endx - startx;
+    let deltaY = endy - starty;
+
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX > 0) {
+            moveRight(board);
+            updateBoardIfMove();
+        }
+        else {
+            moveLeft(board);
+            updateBoardIfMove();
+        }
+    }
+    else {
+        if (deltaY < 0) {
+            moveUp(board);
+            updateBoardIfMove();
+
+        }
+        else if (deltaY > 0) {
+            moveDown(board);
+            updateBoardIfMove();
+        }
+    }
+});
+
+function updateBoardIfMove() {
+    updateBoard();
+    getMax();
+    checkWinOrLoss();
+    if (win === false && loss === false) {
+        setTimeout(function () {
+
+            addRandomNumbers();
+
+            updateBoard();
+        }, 200);
+    }
+}
+
 function cheatCode() {
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[i].length; j++) {
@@ -322,7 +363,7 @@ function newGame() {
     ];
     win = false;
     loss = false;
-    max=0
+    max = 0
     addRandomNumbers();
     addRandomNumbers();
     updateBoard();
