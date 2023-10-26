@@ -1,15 +1,14 @@
-html{
+body {
     background-color: whitesmoke;
-}
-body{
     min-width: 100vw;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow: hidden;
+    overflow: hidden !important;
 }
-.game-container{
+
+.game-container {
 
     display: flex;
     flex-direction: column;
@@ -19,23 +18,24 @@ body{
     min-height: 70vh;
 }
 
-.cell{
+.cell {
     width: 20vw;
     height: 20vh;
     background-color: rgb(95, 95, 95);
-    border: solid rgb(48, 48, 48)  5px ;
-    
+    border: solid rgb(48, 48, 48) 5px;
+
 }
-.row{
+
+.row {
     display: flex;
     align-items: center;
     width: 80vw;
     height: 20vh;
     background-color: rgb(95, 95, 95);
-    border: solid rgb(48, 48, 48)  5px ;
+    border: solid rgb(48, 48, 48) 5px;
 }
 
-.game-board{
+.game-board {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -44,39 +44,42 @@ body{
     height: 84vh;
     margin-top: 0.3rem;
     background-color: rgb(95, 95, 95);
-    border: solid rgb(48, 48, 48)  12px ;
+    border: solid rgb(48, 48, 48) 12px;
     border-radius: 3%;
 }
-.reload{
+
+.reload {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-items: center;
 
 }
-footer{
+
+footer {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     height: 5vh;
 }
-#By{
+
+#By {
     margin-top: 0px;
     margin-bottom: 0px;
     margin-right: 1vw;
     font-family: "Mooli";
 }
 
-.cell{
+.cell {
     font-size: 8em;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family : "Mooli";
+    font-family: "Mooli";
 }
 
-.score{
+.score {
     margin: 0.3rem;
 }
 
@@ -89,30 +92,30 @@ button {
     font-family: "Mooli";
     font-size: 17px;
     padding: 0.6em 1.5em;
-   }
-   
-   button:hover {
+}
+
+button:hover {
     background-position: right center;
     background-size: 200% auto;
     -webkit-animation: pulse 2s infinite;
     animation: pulse512 1.5s infinite;
-   }
-   
-   @keyframes pulse512 {
-    0% {
-     box-shadow: 0 0 0 0 #05bada66;
-    }
-   
-    70% {
-     box-shadow: 0 0 0 10px rgb(218 103 68 / 0%);
-    }
-   
-    100% {
-     box-shadow: 0 0 0 0 rgb(218 103 68 / 0%);
-    }
-   }
+}
 
-.infos{
+@keyframes pulse512 {
+    0% {
+        box-shadow: 0 0 0 0 #05bada66;
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgb(218 103 68 / 0%);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgb(218 103 68 / 0%);
+    }
+}
+
+.infos {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -121,56 +124,80 @@ button {
     font-family: "Mooli";
 }
 
-.number-2{
+.number-2 {
     background-color: rgb(255, 234, 0);
 }
 
-.number-4{
+.number-4 {
     background-color: rgb(255, 162, 0);
 }
 
-.number-8{
+.number-8 {
     background-color: rgb(255, 98, 0);
 }
 
-.number-16{
+.number-16 {
     background-color: rgb(255, 30, 0);
 }
 
-.number-32{
+.number-32 {
     background-color: rgb(255, 0, 111);
 }
 
-.number-64{
+.number-64 {
     background-color: rgb(255, 0, 195);
 }
 
-.number-128{
+.number-128 {
     background-color: rgb(128, 0, 255);
 }
 
-.number-256{
+.number-256 {
     background-color: rgb(47, 0, 255);
 }
 
-.number-512{
+.number-512 {
     background-color: rgb(0, 149, 255);
 }
 
-.number-1024{
+.number-1024 {
     background-color: rgb(0, 255, 221);
 }
 
-.number-2048{
+.number-2048 {
     background-color: rgb(0, 255, 0);
 }
 
-.State{
+.State {
     margin: 0.3rem;
 }
 
-a{
+a {
     text-decoration: none;
     cursor: pointer;
     color: black;
+}
+
+@media screen and (max-width:400px) {
+    .cell {
+        font-size: 3em;
+        height: 10vh;
+    }
+
+    .row {
+        height: 10vh;
+    }
+
+    .game-board {
+        height: 43vh;
+    }
+
+    body {
+        justify-content: space-between;
+
+    }
+
+    .infos {
+        flex-direction: column;
+    }
 }
