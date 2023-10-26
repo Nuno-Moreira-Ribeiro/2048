@@ -180,7 +180,7 @@ a {
 
 @media screen and (max-width:400px) {
     .cell {
-        font-size: 3em;
+        font-size: 1.5em;
         height: 10vh;
     }
 
